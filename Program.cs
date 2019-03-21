@@ -4,48 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace QuanLySinhVien
+namespace baitap1
 {
     class Program
     {
         static void Main(string[] args)
         {
-
             int n;
             Console.WriteLine("Nhap so sinh vien");
-            n = int.Parse(Console.ReadLine());
+            n = Int32.Parse(Console.ReadLine());
             // tao mang doi tuong Sv
-            SinhVien[] sv = new SinhVien[n];
+            SV[] sinhvien = new SV[n];
             for (int i = 0; i < n; i++)
             {
-                sv[i] = new SinhVien();
-                sv[i].nhapTT();
-                
-
-
-
+                sinhvien[i] = new SV();
+                sinhvien[i].nhapthongtin();
+                sinhvien[i].tinhTb();
+                sinhvien[i].In();
             }
-            Console.WriteLine("Danh sach Sinh Vien");
-            for (int j = 0; j < n; j++)
+            // tim ra sinh vien nao co diem tung binh thap nhap
+            float min = sinhvien[0].tinhTb();
+            for (int i = 1; i < n; i++)
             {
-                sv[j].In();
+                if (sinhvien[i].tinhTb() < min)
+                    min = sinhvien[i].tinhTb();
             }
-            Console.ReadKey();
+            Console.WriteLine("SV co diem thap nhat la {0}", min);
+            // sap xep mang sv theo diem tb tang dan
 
-
-            SinhVien tmp;
-            tmp = sv[0];
+            SV tmp;
             {
-                for (int i = 0; i < n - 1; i++)
+                for (int i = 0; i <n-1; i++)
                 {
-                    for (int j = i + 1; j < n; j++)
-
-                        if (sv[i].diemtb() < sv[j].diemtb())
+                    for (int j = i+1; j < n; j++)
+                        if (sinhvien[i].tinhTb() < sinhvien[j].tinhTb())
                         {
-                            tmp = sv[i];
-                            sv[i] = sv[j];
-                            sv[j] = tmp;
+                            tmp = sinhvien[i];
+                            sinhvien[i] = sinhvien[j];
+                            sinhvien[j] = tmp;
                         }
                 }
             }
@@ -53,23 +49,21 @@ namespace QuanLySinhVien
             Console.WriteLine("sinh vien sap xep theo thu tu giam dan");
             for (int i = 0; i < n; i++)
             {
-                Console.WriteLine("SV co diem tb {0} ", sv[i].diemtb());
+                Console.WriteLine("Sinh vien ma {0} co diem tb {1} ", sinhvien[i].maSV, sinhvien[i].tinhTb());
             }
             Console.ReadLine();
+     
 
 
-            Console.WriteLine("Nhap ten  sinh vien can tim");
-            string p = Console.ReadLine();
+
+
+            //tim ra sinh vien co chua chu 18I
             for (int i = 0; i < n; i++)
-                if (sv[i].tenSV.Contains(p))
-                    Console.WriteLine("Ten SV muon tim la: Ten: {0}, Ma SV: {1}, Diem TB: {2}  ", sv[i].tenSV,sv[i].maSV,sv[i].diemtb());
-            
+                if (sinhvien[i].maSV.Contains("18IT"))
+                    Console.WriteLine("SV ma {0} co diem  Tb la {1} co chua chu 18IT", sinhvien[i].maSV, sinhvien[i].tinhTb());
 
             Console.ReadLine();
-
-
-
-
         }
     }
 }
+
